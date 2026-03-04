@@ -32,12 +32,11 @@ public class Vetor {
 
         for (int i = 0; i < this.tamanho; i++) {
             s.append(this.elementos[i]);
-            s.append(", ");
+            if (i < this.tamanho - 1) {
+                s.append(", ");
+            }
         }
 
-        if (this.tamanho > 0){
-            s.append(this.elementos[this.tamanho - 1]);
-        }
         s.append("]");
         return s.toString();
     }
@@ -80,6 +79,31 @@ public class Vetor {
             }
             this.elementos = elementosNovos;
         }
+    }
+
+    public void remove(int posicao){
+        if(!(posicao >= 0 && posicao < tamanho)) {
+            throw new IllegalArgumentException("Posicao invalida");
+        }
+        //desloca elementos pra esquerda
+        for (int i = posicao; i < this.tamanho - 1; i++) {
+            this.elementos[i] = this.elementos[i + 1];
+        }
+
+        this.tamanho--;
+
+        this.elementos[this.tamanho] = null;
+    }
+
+    public boolean remove(String elemento){
+        int posicao = this.busca(elemento);
+
+        if (posicao == -1){
+            return false;
+        }
+
+        this.remove(posicao);
+        return true;
     }
 
 }
